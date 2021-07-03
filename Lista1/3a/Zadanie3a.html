@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sierpinski Triangle SVG</title>
+  </head>
+  <body>
+    <h3>Task 3-A</h3>
+    <input type="number" min="0" max="8" value="0" onchange="inputFunction(this.value)">
+
+    <p id="demo"></p>
+    <!-- Create SVG with given parameters-->
+	<div style="border:2px solid black; display:inline-block;">
+		<svg id="sierpinski" download width="700" height="750" viewBox="0 0 700 750" version="1.1"></svg>
+	</div>
+  	<script>
+		self.startDraw = function(depth, n, l){
+			document.getElementById('sierpinski').innerHTML = '';
+			recusiveDraw(depth, n, l);
+		}
+			
+		self.drawTriangle = function(n, l) {
+			svg = document.getElementById('sierpinski');
+			d = 'M ' + n[0] + ' ' + n[1] + ' L ' +
+			(n[0] - l/2) + ' ' + (n[1] + parseInt(Math.sin(Math.PI/3)*l)) + ' ' +
+			(n[0] + l/2) + ' ' + (n[1] + parseInt(Math.sin(Math.PI/3)*l)) + ' ';
+			var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+			path.setAttribute('d', d);
+			svg.appendChild(path);
+		}
+
+		self.recusiveDraw = function(depth, n, l) {
+			if(depth > 0){
+				recusiveDraw(depth -1, n, l/2);
+				recusiveDraw(depth - 1, [n[0]-l/4, n[1]+parseInt(Math.sin(Math.PI/3)*l)/2], l/2);
+				recusiveDraw(depth - 1, [n[0]+l/4, n[1]+parseInt(Math.sin(Math.PI/3)*l)/2], l/2);
+			} else {
+				drawTriangle(n, l);
+			}
+		}
+
+		self.recusiveDraw(0, [350, 0], 700);
+
+		function inputFunction(x) {
+			step = parseInt(x);
+			startDraw(step, [350, 0], 700);
+      }
+
+  </script>
+</body>
+</html>

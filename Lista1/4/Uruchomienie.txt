@@ -1,0 +1,1 @@
+Aby uruchomic powyższy program , musimy korzystać z Web Server. Tylko wtedy program bedzie uruchomiony z teksturami.

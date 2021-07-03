@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Canvas</title>
+  </head>
+  <body>
+    <h3>Task 1</h3>
+    <ul>
+      <li>"lt distance" to move to the left</li>
+      <li>"rt distance" to move to the right</li>
+      <li>"dn distance" to move down</li>
+      <li>"up distance" to move up</li>
+    </ul>
+    <input type="text" id="myText" onfocus="this.value=''" value="For input">
+    <p>Click the "Input" button to move <button onclick="moveFunction()">Input</button></p>
+    <p id="demo"></p>
+
+    <!-- Create canvas with given width and height -->
+    <canvas id="myCanvas" width="1200" height="600"
+      style="border:1px solid grey;">
+      Your browser does not support the canvas element.
+    </canvas>
+
+
+    <script>
+      var startX = 600; // From this x point the line will be drawn
+      var startY = 300; // From this y point the line will be drawn
+      var saveX = 601;// To this x point the line will be drawn
+      var saveY = 300; // To this y point the line will be drawn
+      function draw(Xcoordinate, Ycoordinate, Xend, Yend) { // Function to draw lines
+        var canvas = document.getElementById('myCanvas')
+        var ctx = canvas.getContext('2d');// context variable is used to draw on a 2D plane
+        // note that (0,0) in canvas is the top left, so 'up' on the vertical component would use substraction.
+        ctx.moveTo(Xcoordinate, Ycoordinate); //A point for the line
+        ctx.lineTo(Xend, Yend); //B point for the line
+        ctx.lineWidth = 2; 
+        ctx.stroke();
+      }
+      draw(startX,startY,saveX,saveY);
+
+      function moveFunction() { // Function to scan user's input
+        var str = document.getElementById("myText").value;
+        var res = str.substr(0,2);
+        switch (res) {
+          case 'lt': // Case to move line to the left
+            var x = parseInt(str.substr(3));
+            saveX = startX; 
+            startX = startX-x;
+            draw(startX, startY, saveX, startY);
+            break;
+          case 'rt': // Case to move line to the right
+            var x = parseInt(str.substr(3));
+            saveX = startX;
+            startX = startX+x;
+            draw(startX, startY, saveX, startY);
+            break;
+          case 'dn':  // Case to move line down
+            var y = parseInt(str.substr(3));
+            saveY = startY;
+            startY = startY+y;
+            draw(startX, startY, startX, saveY);
+            break;
+          case 'up': // Case to move line up
+            var y = parseInt(str.substr(3));
+            saveY = startY;
+            startY = startY-y;
+            draw(startX, startY, startX, saveY);
+            break;
+          default: // Default case if input is incorrect
+            document.getElementById("demo").innerHTML = 'Incorrect operation';
+        }
+      }
+    </script>
+  </body>
+</html>
